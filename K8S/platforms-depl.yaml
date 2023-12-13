@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platforms-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platfomservice
+  template:
+    metadata:
+      labels:
+        app: platfomservice
+    spec:
+      containers:
+      - name: platfomservice
+        image: crispimns/platformservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platfoms-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: platfomservice
+  ports:
+  - name: platfomservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
